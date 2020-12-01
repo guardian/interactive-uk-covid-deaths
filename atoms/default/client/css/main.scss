@@ -1,0 +1,71 @@
+@import "fonts";
+@import "mq";
+@import "palette";
+// @import "enhancer";
+
+.interactive-atom {
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+	background: #FFF;
+}
+
+
+.element-atom,
+.interactive-atom {
+    margin: 0 !important;
+}
+
+
+.linePath {
+  fill: none;
+  stroke: #F56A6B;
+  stroke-width: 6px;
+}
+
+.domain{
+	display: none;
+}
+
+.y.axis .tick{
+	text{
+		transform: translate(8px, -10px);
+		text-align: left;
+		fill: #bababa;
+	}
+
+	line{
+		stroke-width: 1;
+		stroke: #dcdcdc;
+	}
+
+	@include fs-textSans(2);
+}
+
+.x.axis .tick{
+	@include fs-textSans(4);
+
+	text{
+		text-align: middle;
+		fill: #bababa;
+	}
+
+	line{
+		stroke-width: 1;
+		stroke: #bababa;
+	}
+}
+
+.curtain{
+	fill:#FFF;
+	opacity: 1;
+}
+
+.line{
+	stroke: #dcdcdc;
+}
+
+
