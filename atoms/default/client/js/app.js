@@ -1,14 +1,10 @@
-import * as d3B from 'd3'
-import * as d3Select from 'd3-selection'
-import { $ } from 'shared/js/util'
-
-let d3 = Object.assign({}, d3B, d3Select);
+import * as d3 from 'd3'
 
 const data =[]
 
-const wrapperEl = $('.interactive-uk-covid')
+const wrapperEl = d3.select('.interactive-uk-covid').node();
 
-const isMobile = window.matchMedia('(max-width: 739px)').matches
+const isMobile = window.matchMedia('(max-width: 600px)').matches
 
 const margin = {top: 20, right: 20, bottom: 25, left: 30}
 
@@ -25,7 +21,6 @@ let yScale = d3.scaleLinear().range([height - margin.bottom, margin.top]);
 let valueline = d3.line()
 .x(function(d) { return xScale(d.date); })
 .y(function(d) { return yScale(d.value); })
-//.curve(d3.curveMonotoneX);
 
 let svg = d3.select(".interactive-uk-covid")
 .append("svg")
@@ -34,9 +29,6 @@ let svg = d3.select(".interactive-uk-covid")
 
 
 let curtain;
-let texts;
-let lines;
-let format = d3.timeFormat('%m');
 
 d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSsgW5b7RKiaYXfobQjVs.json').then(results => {
 
@@ -63,7 +55,7 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 	.call(
 			d3.axisBottom(xScale)
 			.tickFormat(d3.timeFormat("%b"))
-			.ticks(d3.timeMonth)
+			.ticks(isMobile ? 3 : d3.timeMonth)
 		);
 
 
@@ -78,14 +70,6 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 	.append('rect')
 	.attr('height', height - margin.bottom + 4)
 	.attr('width', width)
-
-
-	texts = d3.selectAll(".tick text");
-	lines = d3.selectAll(".tick line");
-
-	let yLines = d3.selectAll(".y.axis line").nodes()
-	let yTexts = d3.selectAll(".y.axis text").nodes()
-
 
 	let ticks = d3.selectAll(".y.axis .tick").nodes()
 
@@ -106,7 +90,6 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 
 
 const makeTransition = (date) => {
-
 
 	let target = xScale(parseTime(date)) -1
 
