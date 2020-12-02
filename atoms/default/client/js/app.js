@@ -85,7 +85,7 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 	.selectAll("text")
     .style("text-anchor", "start");
 
-	makeTransition('01/02/2020')
+	makeTransition('01/12/2020')
 })
 
 
