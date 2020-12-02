@@ -5,9 +5,38 @@ const isMobile = window.matchMedia('(max-width: 600px)').matches;
 
 const breakPoints = [
 
-new Date('2020 03 11'),
-new Date('2020 04 13'),
-new Date('2020 12 17'),
+{date: new Date('2020 03 11'), scale: 100},
+{date: new Date('2020 03 12'), scale: 100},
+{date: new Date('2020 03 13'), scale: 100},
+{date: new Date('2020 03 17'), scale: 200},
+{date: new Date('2020 03 23'), scale: 1000},
+{date: new Date('2020 03 24'), scale: 1500},
+{date: new Date('2020 03 25'), scale: 1500},
+{date: new Date('2020 03 27'), scale: 2000},
+{date: new Date('2020 03 31'), scale: 10000},
+{date: new Date('2020 04 01'), scale: 10000},
+{date: new Date('2020 04 02'), scale: 10000},
+{date: new Date('2020 04 03'), scale: 10000},
+{date: new Date('2020 04 13'), scale: 30000},
+{date: new Date('2020 04 17'), scale: 30000},
+{date: new Date('2020 04 27'), scale: 40000},
+{date: new Date('2020 05 10'), scale: 50000},
+{date: new Date('2020 05 12'), scale: 50000},
+{date: new Date('2020 05 20'), scale: 50000},
+{date: new Date('2020 05 22'), scale: 60000},
+{date: new Date('2020 05 23'), scale: 60000},
+{date: new Date('2020 06 16'), scale: 60000},
+{date: new Date('2020 06 18'), scale: 60000},
+{date: new Date('2020 06 30'), scale: 60000},
+{date: new Date('2020 07 04'), scale: 60000},
+{date: new Date('2020 08 17'), scale: 60000},
+{date: new Date('2020 08 25'), scale: 60000},
+{date: new Date('2020 09 03'), scale: 60000},
+{date: new Date('2020 09 09'), scale: 60000},
+{date: new Date('2020 09 22'), scale: 60000},
+{date: new Date('2020 10 12'), scale: 60000},
+{date: new Date('2020 11 01'), scale: 60000},
+{date: new Date('2020 12 01'), scale: 70000}
 
 ]
 
@@ -77,7 +106,7 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
     );
 
     xScale.domain([iniDate, new Date('2020 03 11')]);
-    yScale.domain([0, d3.max(data.filter(data => data.date <= new Date('2020 03 11')), d => d.value)]);
+    yScale.domain([0, 200]);
 
    	svg.append("g")
 	.call(xAxis); 
@@ -94,10 +123,10 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 });
 
 
-const updateData = (data) => {
+const updateData = (data, scale) => {
 
     xScale.domain(d3.extent(data, d => d.date));
-	yScale.domain([0, d3.max(data, d => d.value)]);
+	yScale.domain([0, scale]);
 
     svg.selectAll(".y.axis")
 	.transition()
@@ -115,12 +144,12 @@ const updateData = (data) => {
 	.attr("d", valueline)
 }
 
-breakPoints.map( (d,i) => {
+breakPoints.map( d => {
 
 	d3.select(".interactive-uk-covid")
 	.append('button')
-	.html(d.getDate() + '/'  + (d.getMonth() + 1))
-	.on('click', b => updateData(data.filter(data => data.date <= d)))
+	.html(d.date.getDate() + '/'  + (d.date.getMonth() + 1))
+	.on('click', b => updateData(data.filter(data => data.date <= d.date), d.scale))
 
 })
 
