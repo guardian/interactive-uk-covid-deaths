@@ -39,16 +39,6 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 	xScale.domain([parseTime('30/01/2020'), parseTime('01/12/2020')]);
 	yScale.domain([0, max]);
 
-	let yaxis = svg.append("g")
-	.attr("class", "y axis")
-	.attr("text-anchor", "start")
-	.call(d3.axisLeft(yScale)
-		.ticks(5)
-		.tickSizeInner(-width)
-	)
-	.selectAll("text")
-    .style("text-anchor", "start");
-
     let xaxis = svg.append("g")
 	.attr("transform", "translate(0," + (height - margin.bottom) + ")")
 	.attr("class", "x axis")
@@ -85,7 +75,17 @@ d3.json('https://interactive.guim.co.uk/docsdata-test/1-_nmS7kPobbWHghj1a-IWAtSs
 
 	})
 
-	makeTransition('01/12/2020')
+	let yaxis = svg.append("g")
+	.attr("class", "y axis")
+	.attr("text-anchor", "start")
+	.call(d3.axisLeft(yScale)
+		.ticks(5)
+		.tickSizeInner(-width)
+	)
+	.selectAll("text")
+    .style("text-anchor", "start");
+
+	makeTransition('01/02/2020')
 })
 
 
